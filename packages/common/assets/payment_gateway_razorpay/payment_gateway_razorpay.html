@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retire100 - RazorPay Web Payment</title>
+  </head>
+  <body>
+    <script src="./parse-query-parameters-into-a-map.js"></script>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script defer>
+      const queryMap = getQueryMap(window.location.search);
+      const options = {
+        key: queryMap.k,
+        amount: queryMap.a,
+        currency: queryMap.c,
+        name: queryMap.n,
+        image: queryMap.i,
+        order_id: queryMap.o,
+        callback_url: queryMap.cb,
+        redirect: true,
+        prefill: {
+          name: queryMap.pn,
+          email: queryMap.pe,
+          contact: queryMap.pc,
+        },
+        notes: {
+          txnNo: queryMap.nt,
+        },
+        theme: {
+          color: queryMap.tc,
+        },
+      }
+      console.log(options);
+      var rzp1 = new Razorpay(options);
+        window.onload = function(e){  //1  
+        rzp1.open();
+          e.preventDefault();
+      }
+    </script>
+  </body>
+</html>
